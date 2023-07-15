@@ -1,0 +1,15 @@
+.card-container .action-container {
+  opacity: 0;
+}
+
+.card-container:hover .action-container {
+  background-color: rgba(252, 67, 67, 0.696);
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.card-container .action-container .wishlist:hover .action-icon,
+.card-container .action-container .addToReading:hover .action-icon {
+  background-color: black;
+  color: white;
+}

@@ -5,7 +5,9 @@ const Nav = () => {
     <div className="bg-gray-50 flex justify-center">
       <div className="navbar max-w-[1280px] ">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">BookFair</a>
+          <Link to="/" className="btn btn-ghost normal-case text-xl">
+            BookFair
+          </Link>
         </div>
 
         <div className="flex-none gap-2">

@@ -12,9 +12,9 @@ const NewBooks = () => {
         </p>
       </div>
 
-      <div className="my-5">
+      <div className="my-10 flex flex-wrap justify-center gap-5">
         {books.map((book) => (
-          <Book key={book.id} {...book} />
+          <Book key={book.id} book={book} />
         ))}
       </div>
     </div>

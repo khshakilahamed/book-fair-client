@@ -23,7 +23,7 @@ const Exclusive = () => {
             solutions.
           </p>
           <div>
-            <button className="btn btn-neutral text-white">Neutral</button>
+            <button className="btn btn-neutral text-white">Browse Now</button>
           </div>
         </div>
       </div>
