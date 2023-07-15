@@ -6,4 +6,5 @@ export interface IBook {
   author: string;
   price: number;
   image: string;
+  reviews?: { userId: string; review: string }[];
 }

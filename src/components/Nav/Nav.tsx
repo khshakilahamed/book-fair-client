@@ -48,6 +48,11 @@ const Nav = () => {
               </li>
             </ul>
           </div>
+          <div>
+            <Link to="/auth/login">
+              <button className="btn btn-error">Login</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

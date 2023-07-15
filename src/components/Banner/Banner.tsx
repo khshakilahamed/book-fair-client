@@ -19,7 +19,7 @@ const Banner = () => {
                 Let customers read books online without leaving website
               </p>
               <div>
-                <button className="btn btn-error text-white">Neutral</button>
+                <button className="btn btn-error text-white">Explore</button>
               </div>
             </div>
           </div>

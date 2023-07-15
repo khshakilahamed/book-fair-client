@@ -3,9 +3,9 @@
 }
 
 .card-container:hover .action-container {
-  background-color: rgba(252, 67, 67, 0.696);
+  background-color: #f8729fa5;
   opacity: 1;
-  transition: opacity 0.5s;
+  transition: opacity 0.8s;
 }
 
 .card-container .action-container .wishlist:hover .action-icon,
