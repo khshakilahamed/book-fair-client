@@ -1,9 +1,13 @@
-import Form from "../../components/Form/Form";
+import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 
 const Login = () => {
   return (
     <div className="max-w-[1280px] mx-auto my-20">
-      <Form formTitle="Login Here" formType="login" submitBtn="Login" />
+      <LoginRegisterForm
+        formTitle="Login Here"
+        formType="login"
+        submitBtn="Login"
+      />
     </div>
   );
 };

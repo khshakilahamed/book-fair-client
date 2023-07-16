@@ -8,10 +8,10 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 const Banner = () => {
   return (
     <div className="banner ">
-      <div className="banner-main relative">
-        <div className="flex w-full h-full max-w-[1280px] mx-auto">
-          <div className="banner-main-left flex justify-center items-center h-full">
-            <div className="flex flex-col gap-3">
+      <div className="banner-main md:h-[70vh] md:relative">
+        <div className="flex flex-col-reverse md:flex-row w-full h-full max-w-[1280px]  px-4 py-10 mx-auto">
+          <div className="banner-main-left md:w-[40%] flex justify-center items-center h-full py-10">
+            <div className="flex flex-col text-center md:text-start gap-3">
               <h2 className="text-5xl font-bold">
                 Read <span className="text-error">PDF Books</span> Online
               </h2>
@@ -23,13 +23,13 @@ const Banner = () => {
               </div>
             </div>
           </div>
-          <div className="banner-main-right flex justify-center items-center">
-            <img className="w-auto h-full" src={rightBg} alt="" />
+          <div className="banner-main-right md:w-[60%] flex justify-center items-center">
+            <img className="w-1/2 md:w-auto md:h-full" src={rightBg} alt="" />
           </div>
         </div>
 
-        <div className="max-w-[1280px] bg-white mx-auto flex flex-wrap justify-between p-10 rounded shadow absolute left-0 right-0 bottom-[-70px]">
-          <div className="flex items-center gap-3">
+        <div className="max-w-[1280px] bg-white mx-auto flex flex-wrap justify-between px-10 rounded shadow md:absolute left-0 right-0 bottom-[-70px]">
+          <div className="flex items-center gap-3 my-5">
             <div className="bg-black p-2 rounded">
               <HiOutlineBookOpen className="text-4xl text-white" />
             </div>
@@ -38,7 +38,7 @@ const Banner = () => {
               <p className="text-sm text-gray-500">OVER MILLIONS OF BOOKS</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 my-10">
             <div className="bg-black p-2 rounded">
               <SiTheconversation className="text-4xl text-white" />
             </div>
@@ -47,7 +47,7 @@ const Banner = () => {
               <p className="text-sm text-gray-500">ALL ACROSS THE WORLD</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 my-5">
             <div className="bg-black p-2 rounded">
               <SlReload className="text-4xl text-white" />
             </div>
@@ -56,7 +56,7 @@ const Banner = () => {
               <p className="text-sm text-gray-500">SIMPLE RETURN POLICY</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 my-5">
             <div className="bg-black p-2 rounded">
               <RiSecurePaymentLine className="text-4xl text-white" />
             </div>

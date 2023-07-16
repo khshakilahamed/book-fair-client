@@ -10,8 +10,8 @@ const Footer = () => {
   return (
     <div>
       <div className="bg-black">
-        <div className="max-w-[1280px] mx-auto py-16">
-          <div className="grid grid-cols-4 gap-10">
+        <div className="max-w-[1280px]  px-4 mx-auto py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10">
             <div>
               <h1 className="text-white text-2xl font-bold">Publishers</h1>
               <ul className="text-gray-400 py-3">

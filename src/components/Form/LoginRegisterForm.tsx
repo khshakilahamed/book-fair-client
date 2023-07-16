@@ -8,9 +8,9 @@ interface IFormType {
   formTitle: string;
 }
 
-const Form = ({ formType, submitBtn, formTitle }: IFormType) => {
+const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
   return (
-    <div className="w-[380px] mx-auto bg-gray-100 p-10 rounded-lg">
+    <div className="max-w-[380px] mx-auto bg-gray-100 p-10 rounded-lg">
       <div>
         <div className="flex justify-center">
           <img className="w-[100px] h-[100px]" src={bookIcon} alt="bookIcon" />
@@ -89,4 +89,4 @@ const Form = ({ formType, submitBtn, formTitle }: IFormType) => {
   );
 };
 
-export default Form;
+export default LoginRegisterForm;

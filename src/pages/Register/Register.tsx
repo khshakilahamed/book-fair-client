@@ -1,9 +1,9 @@
-import Form from "../../components/Form/Form";
+import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 
 const Register = () => {
   return (
     <div className="max-w-[1280px] mx-auto my-20">
-      <Form
+      <LoginRegisterForm
         formTitle="Register Here"
         formType="register"
         submitBtn="Register"

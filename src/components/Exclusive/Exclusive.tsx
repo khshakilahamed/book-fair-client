@@ -3,11 +3,11 @@ import model from "./../../assets/images/model.jpg";
 const Exclusive = () => {
   return (
     <div className="bg-gray-100 py-20">
-      <div className="w-full flex gap-32  justify-center items-center max-w-[1280px] mx-auto">
-        <div className="w-[50%] flex justify-end pt-20">
+      <div className="w-full flex flex-col md:flex-row justify-center items-center gap-32 px-10  max-w-[1280px] mx-auto">
+        <div className="md:w-[50%] flex justify-center md:justify-end pt-20">
           <img className="w-[90%] rounded-lg" src={model} alt="" />
         </div>
-        <div className="w-[50%] flex flex-col justify-center gap-4">
+        <div className="md:w-[50%] flex flex-col justify-center gap-4">
           <div>
             <span className="bg-white p-2 px-3 rounded">
               Hundreds of Book Genres

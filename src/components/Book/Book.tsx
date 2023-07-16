@@ -11,7 +11,7 @@ interface IProps {
 const Book = ({ book }: IProps) => {
   const { title, genre, publicationDate, author, price, image } = book;
   return (
-    <div className="card-container w-[300px] bg-gray-100 rounded-xl overflow-hidden">
+    <div className="card-container max-w-[300px] bg-gray-100 rounded-xl overflow-hidden">
       <div className=" flex justify-center items-center p-8 relative">
         <img className="rounded-r-xl" src={image} alt="bookImage" />
         <div className="action-container absolute flex flex-col justify-center items-center gap-3 h-full w-full">
