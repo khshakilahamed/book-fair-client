@@ -4,16 +4,13 @@
 import { useGetBooksQuery } from "../../redux/api/apiSlice";
 import { IBook } from "../../types/bookType";
 import Book from "../Book/Book";
+import Spinner from "../Spinner/Spinner";
 
 const NewBooks = () => {
-  const { data: books, isLoading } = useGetBooksQuery(undefined);
+  const { data: books, isLoading } = useGetBooksQuery({});
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center w-full h-[50vh]">
-        <span className="loading loading-dots loading-lg"></span>
-      </div>
-    );
+    return <Spinner />;
   }
   return (
     <div className="max-w-[1280px] mx-auto px-10 py-20">
@@ -26,7 +23,7 @@ const NewBooks = () => {
       </div>
 
       <div className="my-10 flex flex-wrap justify-center gap-5">
-        {books.data.map((book: IBook) => (
+        {books?.data.map((book: IBook) => (
           <Book key={book._id} book={book} />
         ))}
       </div>

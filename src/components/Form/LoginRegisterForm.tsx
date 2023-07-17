@@ -1,6 +1,9 @@
+import { useState } from "react";
 import InputType from "../InputType/InputType";
 import bookIcon from "./../../assets/images/book-icon.png";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hook";
+import { userLogin } from "../../routes/features/user/userActions";
 
 interface IFormType {
   formType: string;
@@ -9,6 +12,24 @@ interface IFormType {
 }
 
 const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const handleLogin = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log(email, password);
+    const credentials = { email, password };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(userLogin(credentials));
+  };
+  const handleRegister = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log(email, password, name);
+  };
+
   return (
     <div className="max-w-[380px] mx-auto bg-gray-100 p-10 rounded-lg">
       <div>
@@ -16,7 +37,15 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
           <img className="w-[100px] h-[100px]" src={bookIcon} alt="bookIcon" />
         </div>
         <h2 className="text-2xl font-bold text-center my-5">{formTitle}</h2>
-        <form className="flex flex-col gap-3">
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={(e) => {
+            if (formType === "login") return handleLogin(e);
+            else {
+              return handleRegister(e);
+            }
+          }}
+        >
           {/* Switch statement */}
           {(() => {
             switch (true) {
@@ -32,6 +61,8 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
                         placeholder="Enter your name"
                         type="text"
                         className="outline-none border rounded-lg px-2 py-1"
+                        required
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </div>
                   </>
@@ -48,6 +79,9 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
               placeholder="Email address"
               type="email"
               className="outline-none border rounded-lg px-2 py-1"
+              autoComplete={formType === "register" ? "off" : "on"}
+              required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -59,6 +93,8 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
               placeholder="Password"
               type="password"
               className="outline-none border rounded-lg px-2 py-1"
+              required
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
