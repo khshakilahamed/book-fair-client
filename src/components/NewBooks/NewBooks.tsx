@@ -1,7 +1,20 @@
-import books from "../../fakeBooks";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { useGetBooksQuery } from "../../redux/api/apiSlice";
+import { IBook } from "../../types/bookType";
 import Book from "../Book/Book";
 
 const NewBooks = () => {
+  const { data: books, isLoading } = useGetBooksQuery(undefined);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center w-full h-[50vh]">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
   return (
     <div className="max-w-[1280px] mx-auto px-10 py-20">
       <div className="flex flex-col items-center gap-2">
@@ -13,8 +26,8 @@ const NewBooks = () => {
       </div>
 
       <div className="my-10 flex flex-wrap justify-center gap-5">
-        {books.map((book) => (
-          <Book key={book.id} book={book} />
+        {books.data.map((book: IBook) => (
+          <Book key={book._id} book={book} />
         ))}
       </div>
     </div>

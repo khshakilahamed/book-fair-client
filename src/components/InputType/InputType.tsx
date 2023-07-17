@@ -2,8 +2,8 @@ interface InputTypeProps {
   type: string;
   label: string;
   name: string;
-  id: string;
-  placeholder: string;
+  id?: string;
+  placeholder?: string;
   labelClassName?: string;
   // additional props if needed
 }
