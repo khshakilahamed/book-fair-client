@@ -1,6 +1,26 @@
+import { useState } from "react";
 import InputType from "../InputType/InputType";
+import { format } from "date-fns";
 
 const BookForm = () => {
+  const [title, setTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [date, setDate] = useState("");
+  const [author, setAuthor] = useState("");
+  const [price, setPrice] = useState("");
+  const [imageLink, setImageLink] = useState("");
+
+  const handleDate = (e: { target: { value: string | number | Date } }) => {
+    const date = format(new Date(e.target.value), "PP");
+    setDate(date);
+  };
+
+  const handleAddBook = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    console.log(title, genre, date, author, price, imageLink);
+  };
+
   return (
     <div>
       <div className="lg:w-[50%] mx-auto ">
@@ -9,7 +29,7 @@ const BookForm = () => {
             {/* <img className="w-[100px] h-[100px]" src={bookIcon} alt="bookIcon" /> */}
           </div>
           {/* <h2 className="text-2xl font-bold text-center my-5">{formTitle}</h2> */}
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" onSubmit={handleAddBook}>
             {/* Switch statement */}
             <div className="flex flex-col">
               <InputType
@@ -20,6 +40,7 @@ const BookForm = () => {
                 placeholder="Title"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -31,6 +52,7 @@ const BookForm = () => {
                 placeholder="Genre"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={(e) => setGenre(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -42,6 +64,7 @@ const BookForm = () => {
                 placeholder="Publication Date"
                 type="date"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={handleDate}
               />
             </div>
             <div className="flex flex-col">
@@ -53,6 +76,7 @@ const BookForm = () => {
                 placeholder="Author"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={(e) => setAuthor(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -64,6 +88,7 @@ const BookForm = () => {
                 placeholder="Price"
                 type="number"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={(e) => setPrice(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -75,6 +100,7 @@ const BookForm = () => {
                 placeholder="Image Link"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
+                onChange={(e) => setImageLink(e.target.value)}
               />
             </div>
 
