@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useGetBooksQuery } from "../../redux/api/apiSlice";
-import { IBook } from "../../types/bookType";
+import { IBook } from "../../types/globalType";
 import Book from "../Book/Book";
 import Spinner from "../Spinner/Spinner";
 

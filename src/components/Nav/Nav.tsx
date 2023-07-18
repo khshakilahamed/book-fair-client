@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { searchBook } from "../../redux/features/book/bookSlice";
 import { userLogout } from "../../redux/features/user/userActions";
 import userIcon from "./../../assets/images/userIcon.png";
+import { BsHeart } from "react-icons/bs";
+import { AiOutlineRead } from "react-icons/ai";
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +34,16 @@ const Nav = () => {
       </li>
       <li>
         <Link to="/my-books">My Book</Link>
+      </li>
+      <li>
+        <Link to="/reading-list">
+          <AiOutlineRead className="text-2xl" />
+        </Link>
+      </li>
+      <li>
+        <Link to="/wishlist">
+          <BsHeart className="text-2xl" />
+        </Link>
       </li>
     </>
   );

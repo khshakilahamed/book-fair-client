@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IBook, IPostReview } from "../../types/bookType";
+import { IBook, IPostReview } from "../../types/globalType";
 
 const token = localStorage.getItem("token")
   ? localStorage.getItem("token")
@@ -8,7 +8,7 @@ const token = localStorage.getItem("token")
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
-  tagTypes: ["books", "postReview"],
+  tagTypes: ["books", "postReview", "wishlist", "reading-list"],
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: ({
@@ -111,6 +111,76 @@ export const api = createApi({
       }),
       invalidatesTags: ["books"],
     }),
+    getWishlist: builder.query({
+      query: () => ({
+        url: `/wishlist`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+      }),
+      providesTags: ["wishlist"],
+    }),
+    postWishlist: builder.mutation({
+      query: (id: string) => ({
+        url: `/wishlist`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: { book: id },
+      }),
+      invalidatesTags: ["wishlist"],
+    }),
+    deleteWishlist: builder.mutation({
+      query: (id: string) => ({
+        url: `/wishlist`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: { id },
+      }),
+      invalidatesTags: ["wishlist"],
+    }),
+    getReadingList: builder.query({
+      query: () => ({
+        url: `/reading-list`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+      }),
+      providesTags: ["reading-list"],
+    }),
+    postReadingList: builder.mutation({
+      query: (id: string) => ({
+        url: `/reading-list`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: { book: id },
+      }),
+      invalidatesTags: ["reading-list"],
+    }),
+    deleteReadingList: builder.mutation({
+      query: (id: string) => ({
+        url: `/reading-list`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: { id },
+      }),
+      invalidatesTags: ["reading-list"],
+    }),
   }),
 });
 
@@ -122,4 +192,10 @@ export const {
   usePostReviewMutation,
   useGetMyBooksQuery,
   useDeleteBookMutation,
+  useGetWishlistQuery,
+  usePostWishlistMutation,
+  useDeleteWishlistMutation,
+  useGetReadingListQuery,
+  usePostReadingListMutation,
+  useDeleteReadingListMutation,
 } = api;

@@ -6,7 +6,7 @@ import Book from "../../components/Book/Book";
 import InputType from "../../components/InputType/InputType";
 import { useGetBooksQuery } from "../../redux/api/apiSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { IBook } from "../../types/bookType";
+import { IBook } from "../../types/globalType";
 import {
   filterMaxPrice,
   filterMinPrice,
@@ -43,7 +43,7 @@ const Books = () => {
   };
 
   return (
-    <div className="max-w-[1280px] mx-auto gap-10">
+    <div className="max-w-[1280px] min-h-[53vh] mx-auto gap-10">
       <div className="flex flex-col lg:flex-row lg:gap-10">
         <div className=" lg:w-[200px] flex justify-center px-10 lg:px-0">
           <form

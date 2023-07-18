@@ -7,7 +7,7 @@ import {
   usePostReviewMutation,
 } from "../../redux/api/apiSlice";
 import { useAppSelector } from "../../redux/hook";
-import { IReviews } from "../../types/bookType";
+import { IReviews } from "../../types/globalType";
 import Spinner from "../Spinner/Spinner";
 
 const BookReviews = ({ id }: { id: string }) => {

@@ -3,7 +3,7 @@ import InputType from "../InputType/InputType";
 import { format } from "date-fns";
 import { usePostBookMutation } from "../../redux/api/apiSlice";
 import Spinner from "../Spinner/Spinner";
-import { IBook } from "../../types/bookType";
+import { IBook } from "../../types/globalType";
 import { toast } from "react-hot-toast";
 
 const BookForm = () => {

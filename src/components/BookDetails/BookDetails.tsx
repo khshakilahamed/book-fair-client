@@ -3,7 +3,7 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleBookQuery } from "../../redux/api/apiSlice";
 import Spinner from "../Spinner/Spinner";
-import { IBook } from "../../types/bookType";
+import { IBook } from "../../types/globalType";
 import BookReviews from "../BookReviews/BookReviews";
 
 const BookDetails = () => {

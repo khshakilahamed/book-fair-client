@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { IBook } from "../../types/bookType";
+import { IBook } from "../../types/globalType";
 import { BsCurrencyDollar, BsHeart } from "react-icons/bs";
 import { AiOutlineRead } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
@@ -8,8 +10,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDeleteBookMutation } from "../../redux/api/apiSlice";
+import {
+  useDeleteBookMutation,
+  usePostReadingListMutation,
+  usePostWishlistMutation,
+} from "../../redux/api/apiSlice";
 import swal from "sweetalert";
+import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 interface IProps {
   book: IBook;
@@ -19,9 +27,38 @@ const Book = ({ book }: IProps) => {
   const { _id, title, genre, author, price, image } = book;
 
   const { user } = useAppSelector((state) => state.user);
-  const [deleteBook, { isLoading, isSuccess }] = useDeleteBookMutation();
+  const [deleteBook, { isLoading, isSuccess, error }] = useDeleteBookMutation();
+  const [
+    postWishlist,
+    { isSuccess: postWishlistSuccess, isError: postWishlistIsError },
+  ] = usePostWishlistMutation();
+
+  const [
+    postReadingList,
+    { isSuccess: postReadingListSuccess, isError: postReadingListIsError },
+  ] = usePostReadingListMutation();
 
   const location = useLocation();
+
+  useEffect(() => {
+    if (postWishlistSuccess) {
+      toast.success("Added to wishlist");
+    }
+    if (postWishlistIsError) {
+      toast.error("Something went wrong");
+    }
+    if (postReadingListSuccess) {
+      toast.success("Added to reading list");
+    }
+    if (postReadingListIsError) {
+      toast.error("Something went wrong");
+    }
+  }, [
+    postWishlistSuccess,
+    postWishlistIsError,
+    postReadingListSuccess,
+    postReadingListIsError,
+  ]);
 
   const handleDelete = (id: string) => {
     swal({
@@ -44,11 +81,12 @@ const Book = ({ book }: IProps) => {
     });
   };
 
-  const handleWishlist = () => {
-    console.log("Wishlist");
+  const handleWishlist = (id: string) => {
+    postWishlist(id);
   };
-  const handleReadingList = () => {
-    console.log("ReadingList");
+
+  const handleReadingList = (id: string) => {
+    postReadingList(id);
   };
 
   return (
@@ -57,13 +95,17 @@ const Book = ({ book }: IProps) => {
         <img className="rounded-r-xl w-full" src={image} alt="bookImage" />
         <div className="action-container absolute flex flex-col justify-center items-center gap-3 h-full w-full">
           <div className="flex items-center gap-3">
-            <p className="wishlist" title="Wishlist" onClick={handleWishlist}>
+            <p
+              className="wishlist"
+              title="Wishlist"
+              onClick={() => handleWishlist(book._id)}
+            >
               <BsHeart className="action-icon bg-white h-[50px]  w-[50px] p-2 rounded text-3xl cursor-pointer " />
             </p>
             <p
               className="addToReading"
               title="Add to reading"
-              onClick={handleReadingList}
+              onClick={() => handleReadingList(book._id)}
             >
               <AiOutlineRead className="action-icon bg-white h-[50px]  w-[50px] p-2 rounded text-4xl cursor-pointer" />
             </p>

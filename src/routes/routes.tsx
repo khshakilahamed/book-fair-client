@@ -7,6 +7,8 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import BookDetails from "../components/BookDetails/BookDetails";
 import MyBooks from "../components/MyBooks/MyBooks";
+import WishList from "../components/WishList/WishList";
+import ReadingList from "../components/ReadingList/ReadingList";
 
 const routes = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const routes = createBrowserRouter([
       {
         path: "/my-books",
         element: <MyBooks />,
+      },
+      {
+        path: "/wishlist",
+        element: <WishList />,
+      },
+      {
+        path: "/reading-list",
+        element: <ReadingList />,
       },
     ],
   },
