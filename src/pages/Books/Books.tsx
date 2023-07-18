@@ -10,7 +10,7 @@ import { IBook } from "../../types/bookType";
 import {
   filterMaxPrice,
   filterMinPrice,
-} from "../../routes/features/book/bookSlice";
+} from "../../redux/features/book/bookSlice";
 import Spinner from "../../components/Spinner/Spinner";
 
 const Books = () => {

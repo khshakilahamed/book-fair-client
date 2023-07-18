@@ -1,8 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IBook, IPostReview } from "../../types/bookType";
+
+const token = localStorage.getItem("token")
+  ? localStorage.getItem("token")
+  : null;
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
+  tagTypes: ["books", "postReview"],
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: ({
@@ -48,8 +54,48 @@ export const api = createApi({
           return queryString;
         }
       },
+      providesTags: ["books"],
+    }),
+
+    postBook: builder.mutation<IBook, Partial<IBook>>({
+      query: (bookData: IBook) => ({
+        url: "/books",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: bookData,
+      }),
+      invalidatesTags: ["books"],
+    }),
+
+    getSingleBook: builder.query({
+      query: (id: string) => `/books/${id}`,
+    }),
+    getReviews: builder.query({
+      query: (id: string) => `/books/reviews/${id}`,
+      providesTags: ["postReview"],
+    }),
+    postReview: builder.mutation({
+      query: ({ id, data }: IPostReview) => ({
+        url: `/books/review/${id}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: data,
+      }),
+      invalidatesTags: ["postReview"],
     }),
   }),
 });
 
-export const { useGetBooksQuery } = api;
+export const {
+  useGetBooksQuery,
+  usePostBookMutation,
+  useGetSingleBookQuery,
+  useGetReviewsQuery,
+  usePostReviewMutation,
+} = api;

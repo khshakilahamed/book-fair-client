@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import InputType from "../InputType/InputType";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { searchBook } from "../../routes/features/book/bookSlice";
-import { userLogout } from "../../routes/features/user/userActions";
+import { searchBook } from "../../redux/features/book/bookSlice";
+import { userLogout } from "../../redux/features/user/userActions";
+import userIcon from "./../../assets/images/userIcon.png";
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -90,35 +91,43 @@ const Nav = () => {
             </div>
           )}
 
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-            >
-              {user && (
+          {user && (
+            <div className="dropdown dropdown-end ">
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar border-gray-500"
+              >
+                <div className="w-10 rounded-full">
+                  <img src={userIcon} alt="user-icon" />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
+                {user && (
+                  <li>
+                    <a className="justify-between">{user.name}</a>
+                    <a className="justify-between">{user.email}</a>
+                  </li>
+                )}
                 <li>
-                  <a className="justify-between">{user.name}</a>
-                  <a className="justify-between">{user.email}</a>
+                  <a className="justify-between">Profile</a>
                 </li>
-              )}
-              <li>
-                <a className="justify-between">Profile</a>
-              </li>
 
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <a onClick={handleLogout}>Logout</a>
+                </li>
+              </ul>
+            </div>
+          )}
           {!user && (
-            <div>
+            <div className="flex gap-2">
               <Link to="/auth/login">
-                <button className="btn btn-error">Login</button>
+                <button className="btn btn-error btn-outline">Login</button>
+              </Link>
+              <Link to="/auth/register">
+                <button className="btn btn-error btn-outline">Register</button>
               </Link>
             </div>
           )}

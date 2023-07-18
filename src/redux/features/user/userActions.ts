@@ -2,11 +2,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 interface ICredential {
+  name?: string;
   email: string;
   password: string;
 }
 
-interface LoginResponse {
+interface LoginRegisterResponse {
   statusCode: number;
   success: boolean;
   message: string;
@@ -31,6 +32,8 @@ interface CurrentUserResponse {
   };
 }
 
+const token = localStorage.getItem("token");
+
 export const userLogin = createAsyncThunk(
   "user/login",
   async (credentials: ICredential) => {
@@ -43,7 +46,7 @@ export const userLogin = createAsyncThunk(
         body: JSON.stringify(credentials),
       });
 
-      const LoginResponse: LoginResponse = await res.json();
+      const LoginResponse: LoginRegisterResponse = await res.json();
 
       const { user, accessToken } = LoginResponse.data;
 
@@ -56,7 +59,30 @@ export const userLogin = createAsyncThunk(
   }
 );
 
-const token = localStorage.getItem("token");
+export const userRegister = createAsyncThunk(
+  "user/register",
+  async (credentials: ICredential) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/auth/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      const registerResponse: LoginRegisterResponse = await res.json();
+
+      const { user, accessToken } = registerResponse.data;
+
+      localStorage.setItem("token", accessToken);
+
+      return { user, accessToken };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const currentUser = createAsyncThunk("user/current-user", async () => {
   try {

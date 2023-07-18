@@ -1,9 +1,9 @@
 import { useState } from "react";
 import InputType from "../InputType/InputType";
 import bookIcon from "./../../assets/images/book-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hook";
-import { userLogin } from "../../routes/features/user/userActions";
+import { userLogin, userRegister } from "../../redux/features/user/userActions";
 
 interface IFormType {
   formType: string;
@@ -16,18 +16,23 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(email, password);
     const credentials = { email, password };
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    dispatch(userLogin(credentials));
+    void dispatch(userLogin(credentials));
+    navigate("/");
   };
+
   const handleRegister = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log(email, password, name);
+    const credentials = { name, email, password };
+    void dispatch(userRegister(credentials));
+    navigate("/");
   };
 
   return (

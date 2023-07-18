@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import InputType from "../InputType/InputType";
 import { format } from "date-fns";
+import { usePostBookMutation } from "../../redux/api/apiSlice";
+import Spinner from "../Spinner/Spinner";
+import { IBook } from "../../types/bookType";
+import { toast } from "react-hot-toast";
 
 const BookForm = () => {
   const [title, setTitle] = useState("");
@@ -15,10 +19,46 @@ const BookForm = () => {
     setDate(date);
   };
 
-  const handleAddBook = (e: { preventDefault: () => void }) => {
+  const [postBook, { isLoading, isError, isSuccess, error }] =
+    usePostBookMutation();
+
+  if (isLoading && isSuccess) {
+    return <Spinner />;
+  }
+  if (isSuccess) {
+    return toast.success("Successfully added the book");
+  }
+
+  if (isError && error) {
+    toast.error("Something went wrong");
+  }
+
+  const handleAddBook = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(title, genre, date, author, price, imageLink);
+    // console.log(title, genre, date, author, price, imageLink);
+    if (
+      title === "" ||
+      genre === "" ||
+      date === "" ||
+      author === "" ||
+      price === "" ||
+      imageLink === ""
+    ) {
+      toast.error("Please, type all fields");
+      return;
+    }
+
+    const bookData: Partial<IBook> = {
+      title,
+      genre,
+      publicationDate: date,
+      author,
+      price: Number(price),
+      image: imageLink,
+    };
+
+    void postBook(bookData);
   };
 
   return (
@@ -28,7 +68,9 @@ const BookForm = () => {
           <div className="flex justify-center">
             {/* <img className="w-[100px] h-[100px]" src={bookIcon} alt="bookIcon" /> */}
           </div>
-          {/* <h2 className="text-2xl font-bold text-center my-5">{formTitle}</h2> */}
+          <h2 className="text-2xl font-bold text-center my-5">
+            Fill the book details
+          </h2>
           <form className="flex flex-col gap-3" onSubmit={handleAddBook}>
             {/* Switch statement */}
             <div className="flex flex-col">
@@ -41,6 +83,7 @@ const BookForm = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={(e) => setTitle(e.target.value)}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -53,6 +96,7 @@ const BookForm = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={(e) => setGenre(e.target.value)}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -65,6 +109,7 @@ const BookForm = () => {
                 type="date"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={handleDate}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -77,6 +122,7 @@ const BookForm = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={(e) => setAuthor(e.target.value)}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -89,6 +135,7 @@ const BookForm = () => {
                 type="number"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={(e) => setPrice(e.target.value)}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -101,6 +148,7 @@ const BookForm = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 onChange={(e) => setImageLink(e.target.value)}
+                required
               />
             </div>
 

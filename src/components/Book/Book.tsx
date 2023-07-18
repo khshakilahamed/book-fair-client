@@ -3,13 +3,15 @@ import { BsCurrencyDollar, BsHeart } from "react-icons/bs";
 import { AiOutlineRead } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import "./Book.css";
+import { Link } from "react-router-dom";
 
 interface IProps {
   book: IBook;
 }
 
 const Book = ({ book }: IProps) => {
-  const { title, genre, publicationDate, author, price, image } = book;
+  const { _id, title, genre, publicationDate, author, price, image } = book;
+
   return (
     <div className="card-container max-w-[300px] bg-gray-100 rounded-xl overflow-hidden">
       <div className=" flex justify-center items-center p-8 relative">
@@ -24,10 +26,13 @@ const Book = ({ book }: IProps) => {
             </p>
           </div>
           <div>
-            <button className="btn btn-link text-white text-lg hover:text-black">
+            <Link
+              to={`/book-details/${_id}`}
+              className="btn btn-link text-white text-lg hover:text-black"
+            >
               Details
               <FaArrowRight />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

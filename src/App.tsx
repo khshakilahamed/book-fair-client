@@ -1,8 +1,9 @@
 import MainLayout from "./Layouts/MainLayout";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./redux/hook";
-import { currentUser } from "./routes/features/user/userActions";
+import { currentUser } from "./redux/features/user/userActions";
 import Spinner from "./components/Spinner/Spinner";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const user = useAppSelector((state) => state.user);
@@ -13,12 +14,13 @@ function App() {
     dispatch(currentUser());
   }, [dispatch]);
 
-  if (user.isLoading) {
+  if (user.isLoading && !user.isSuccess) {
     return <Spinner />;
   }
 
   return (
     <>
+      <Toaster />
       <MainLayout />
     </>
   );
