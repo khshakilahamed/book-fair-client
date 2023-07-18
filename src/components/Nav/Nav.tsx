@@ -30,6 +30,9 @@ const Nav = () => {
       <li>
         <Link to="/addNewBook">Add Book</Link>
       </li>
+      <li>
+        <Link to="/my-books">My Book</Link>
+      </li>
     </>
   );
 

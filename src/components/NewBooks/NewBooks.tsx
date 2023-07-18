@@ -23,7 +23,7 @@ const NewBooks = () => {
       </div>
 
       <div className="my-10 flex flex-wrap justify-center gap-5">
-        {books?.data.map((book: IBook) => (
+        {books?.data.slice(0, 10).map((book: IBook) => (
           <Book key={book._id} book={book} />
         ))}
       </div>

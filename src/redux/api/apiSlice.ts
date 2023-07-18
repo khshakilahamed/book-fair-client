@@ -89,6 +89,28 @@ export const api = createApi({
       }),
       invalidatesTags: ["postReview"],
     }),
+    getMyBooks: builder.query({
+      query: () => ({
+        url: `/books/my-books`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+      }),
+      providesTags: ["books"],
+    }),
+    deleteBook: builder.mutation({
+      query: (id: string) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+      }),
+      invalidatesTags: ["books"],
+    }),
   }),
 });
 
@@ -98,4 +120,6 @@ export const {
   useGetSingleBookQuery,
   useGetReviewsQuery,
   usePostReviewMutation,
+  useGetMyBooksQuery,
+  useDeleteBookMutation,
 } = api;

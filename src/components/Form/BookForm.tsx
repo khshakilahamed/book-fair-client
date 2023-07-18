@@ -22,11 +22,12 @@ const BookForm = () => {
   const [postBook, { isLoading, isError, isSuccess, error }] =
     usePostBookMutation();
 
-  if (isLoading && isSuccess) {
-    return <Spinner />;
-  }
-  if (isSuccess) {
-    return toast.success("Successfully added the book");
+  // if (isLoading && isSuccess) {
+  //   return <Spinner />;
+  // }
+
+  if (isSuccess && !isLoading) {
+    toast.success("Successfully added the book");
   }
 
   if (isError && error) {
@@ -47,6 +48,8 @@ const BookForm = () => {
     ) {
       toast.error("Please, type all fields");
       return;
+
+      e.currentTarget.reset();
     }
 
     const bookData: Partial<IBook> = {
@@ -151,8 +154,13 @@ const BookForm = () => {
                 required
               />
             </div>
-
-            <button className="btn btn-error mt-5">Submit</button>
+            <div className="w-full text-center">
+              {isLoading ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : (
+                <button className="btn btn-error mt-5 w-full">Submit</button>
+              )}
+            </div>
           </form>
         </div>
       </div>
