@@ -26,7 +26,7 @@ const initialState = {
 const UpdateBook = () => {
   const [formValue, setFormValue] = useState<Partial<IBook>>(initialState);
   const { id } = useParams();
-  const { data, isLoading, error } = useGetSingleBookQuery(id!);
+  const { data, isLoading } = useGetSingleBookQuery(id!);
   const { title, genre, publicationDate, author, price, image } = formValue;
 
   console.log(data?.data);
@@ -109,7 +109,7 @@ const UpdateBook = () => {
                 placeholder="Author"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                required
+                value={author || ""}
               />
             </div>
             <div className="flex flex-col">
@@ -121,7 +121,7 @@ const UpdateBook = () => {
                 placeholder="Price"
                 type="number"
                 className="outline-none border rounded-lg px-2 py-1"
-                required
+                value={price || 0}
               />
             </div>
             <div className="flex flex-col">
@@ -133,7 +133,7 @@ const UpdateBook = () => {
                 placeholder="Image Link"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                required
+                value={image || ""}
               />
             </div>
             <div className="w-full text-center">
@@ -142,6 +142,7 @@ const UpdateBook = () => {
           ) : (
             <button className="btn btn-error mt-5 w-full">Submit</button>
           )} */}
+              <button className="btn btn-error mt-5 w-full">Submit</button>
             </div>
           </form>
         </div>

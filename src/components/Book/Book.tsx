@@ -28,7 +28,7 @@ const Book = ({ book }: IProps) => {
   const { _id, title, genre, author, price, image } = book;
 
   const { user } = useAppSelector((state) => state.user);
-  const [deleteBook, { isLoading, isSuccess, error }] = useDeleteBookMutation();
+  const [deleteBook, { isSuccess }] = useDeleteBookMutation();
   const [
     postWishlist,
     { isSuccess: postWishlistSuccess, isError: postWishlistIsError },

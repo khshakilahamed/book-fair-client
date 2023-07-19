@@ -13,7 +13,7 @@ import Spinner from "../Spinner/Spinner";
 const BookReviews = ({ id }: { id: string }) => {
   const [userReview, setUserReview] = useState("");
 
-  const { data, isLoading, isError } = useGetReviewsQuery(id, {
+  const { data, isLoading } = useGetReviewsQuery(id, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
   });

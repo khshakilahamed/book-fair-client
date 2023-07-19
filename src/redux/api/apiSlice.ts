@@ -7,7 +7,9 @@ const token = localStorage.getItem("token")
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://book-fair-server.vercel.app/api/v1/",
+  }),
   tagTypes: [
     "books",
     "postReview",
