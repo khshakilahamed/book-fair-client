@@ -8,7 +8,14 @@ const token = localStorage.getItem("token")
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
-  tagTypes: ["books", "postReview", "wishlist", "reading-list"],
+  tagTypes: [
+    "books",
+    "postReview",
+    "wishlist",
+    "reading-list",
+    "postBook",
+    "deleteBook",
+  ],
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: ({
@@ -67,7 +74,7 @@ export const api = createApi({
         },
         body: bookData,
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books", "postBook"],
     }),
 
     getSingleBook: builder.query({
@@ -98,7 +105,7 @@ export const api = createApi({
           authorization: token!,
         },
       }),
-      providesTags: ["books"],
+      providesTags: ["postBook", "deleteBook"],
     }),
     deleteBook: builder.mutation({
       query: (id: string) => ({
@@ -109,7 +116,7 @@ export const api = createApi({
           authorization: token!,
         },
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books", "deleteBook"],
     }),
     getWishlist: builder.query({
       query: () => ({

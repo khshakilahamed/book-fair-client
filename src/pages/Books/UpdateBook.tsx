@@ -1,79 +1,65 @@
-import { FormEvent, useState } from "react";
-import InputType from "../InputType/InputType";
-import { format } from "date-fns";
-import { usePostBookMutation } from "../../redux/api/apiSlice";
-import Spinner from "../Spinner/Spinner";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useParams } from "react-router-dom";
+import InputType from "../../components/InputType/InputType";
+import { useGetSingleBookQuery } from "../../redux/api/apiSlice";
+import Spinner from "../../components/Spinner/Spinner";
+import { useEffect, useState } from "react";
+import { format, parse } from "date-fns";
 import { IBook } from "../../types/globalType";
-import { toast } from "react-hot-toast";
 
-const BookForm = () => {
-  const [title, setTitle] = useState("");
-  const [genre, setGenre] = useState("");
-  const [date, setDate] = useState("");
-  const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
-  const [imageLink, setImageLink] = useState("");
+const today = format(new Date(), "yyyy-MM-dd"); // 2023-07-20
 
-  const handleDate = (e: { target: { value: string | number | Date } }) => {
-    const date = format(new Date(e.target.value), "PP");
-    setDate(date);
-  };
+const initialState = {
+  title: "",
+  genre: "",
+  publicationDate: today,
+  author: "",
+  price: 0,
+  image: "",
+};
 
-  const [postBook, { isLoading, isError, isSuccess, error }] =
-    usePostBookMutation();
+const UpdateBook = () => {
+  const [formValue, setFormValue] = useState<Partial<IBook>>(initialState);
+  const { id } = useParams();
+  const { data, isLoading, error } = useGetSingleBookQuery(id!);
+  const { title, genre, publicationDate, author, price, image } = formValue;
 
-  // if (isLoading && isSuccess) {
-  //   return <Spinner />;
-  // }
+  console.log(data?.data);
 
-  if (isSuccess && !isLoading) {
-    toast.success("Successfully added the book");
+  if (isLoading) {
+    return <Spinner />;
   }
 
-  if (isError && error) {
-    toast.error("Something went wrong");
-  }
+  useEffect(() => {
+    if (id && Object.keys(data?.data).length > 0) {
+      const { publicationDate, ...otherInfo } = data?.data;
 
-  const handleAddBook = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+      const parsedDate = parse(publicationDate, "MMM d, yyyy", new Date());
+      const formattedDate = format(parsedDate, "yyyy-MM-dd");
 
-    // console.log(title, genre, date, author, price, imageLink);
-    if (
-      title === "" ||
-      genre === "" ||
-      date === "" ||
-      author === "" ||
-      price === "" ||
-      imageLink === ""
-    ) {
-      toast.error("Please, type all fields");
-      return;
+      setFormValue({ ...otherInfo, publicationDate: formattedDate });
+    } else {
+      setFormValue({ ...initialState });
     }
-
-    const bookData: Partial<IBook> = {
-      title,
-      genre,
-      publicationDate: date,
-      author,
-      price: Number(price),
-      image: imageLink,
-    };
-
-    void postBook(bookData);
-    e.currentTarget.reset();
-  };
+  }, [id, data?.data]);
 
   return (
-    <div>
-      <div className="lg:w-[50%] mx-auto ">
+    <div className="max-w-[1280px] mx-auto">
+      <div className="lg:w-[50%] mx-auto py-10">
         <div className="mx-10 bg-gray-100 p-10 rounded-lg">
           <div className="flex justify-center">
             {/* <img className="w-[100px] h-[100px]" src={bookIcon} alt="bookIcon" /> */}
           </div>
           <h2 className="text-2xl font-bold text-center my-5">
-            Fill the book details
+            Update book info
           </h2>
-          <form className="flex flex-col gap-3" onSubmit={handleAddBook}>
+
+          <form className="flex flex-col gap-3">
             {/* Switch statement */}
             <div className="flex flex-col">
               <InputType
@@ -84,8 +70,8 @@ const BookForm = () => {
                 placeholder="Title"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={(e) => setTitle(e.target.value)}
-                required
+                value={title || ""}
+                // onChange={}
               />
             </div>
             <div className="flex flex-col">
@@ -97,8 +83,8 @@ const BookForm = () => {
                 placeholder="Genre"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={(e) => setGenre(e.target.value)}
-                required
+                value={genre || ""}
+                // onChange={}
               />
             </div>
             <div className="flex flex-col">
@@ -109,9 +95,9 @@ const BookForm = () => {
                 name="publicationDate"
                 placeholder="Publication Date"
                 type="date"
+                value={publicationDate || today}
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={handleDate}
-                required
+                // onChange={(e) => console.log(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
@@ -123,7 +109,6 @@ const BookForm = () => {
                 placeholder="Author"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={(e) => setAuthor(e.target.value)}
                 required
               />
             </div>
@@ -136,7 +121,6 @@ const BookForm = () => {
                 placeholder="Price"
                 type="number"
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={(e) => setPrice(e.target.value)}
                 required
               />
             </div>
@@ -149,16 +133,15 @@ const BookForm = () => {
                 placeholder="Image Link"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                onChange={(e) => setImageLink(e.target.value)}
                 required
               />
             </div>
             <div className="w-full text-center">
-              {isLoading ? (
-                <span className="loading loading-spinner loading-xs"></span>
-              ) : (
-                <button className="btn btn-error mt-5 w-full">Submit</button>
-              )}
+              {/* {isLoading ? (
+            <span className="loading loading-spinner loading-xs"></span>
+          ) : (
+            <button className="btn btn-error mt-5 w-full">Submit</button>
+          )} */}
             </div>
           </form>
         </div>
@@ -167,4 +150,4 @@ const BookForm = () => {
   );
 };
 
-export default BookForm;
+export default UpdateBook;

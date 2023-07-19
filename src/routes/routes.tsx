@@ -9,6 +9,8 @@ import BookDetails from "../components/BookDetails/BookDetails";
 import MyBooks from "../components/MyBooks/MyBooks";
 import WishList from "../components/WishList/WishList";
 import ReadingList from "../components/ReadingList/ReadingList";
+import PrivateRoute from "./PrivateRoute";
+import UpdateBook from "../pages/Books/UpdateBook";
 
 const routes = createBrowserRouter([
   {
@@ -29,19 +31,43 @@ const routes = createBrowserRouter([
       },
       {
         path: "/addNewBook",
-        element: <AddBook />,
+        element: (
+          <PrivateRoute>
+            <AddBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-books",
-        element: <MyBooks />,
+        element: (
+          <PrivateRoute>
+            <MyBooks />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update-book/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/wishlist",
-        element: <WishList />,
+        element: (
+          <PrivateRoute>
+            <WishList />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/reading-list",
-        element: <ReadingList />,
+        element: (
+          <PrivateRoute>
+            <ReadingList />
+          </PrivateRoute>
+        ),
       },
     ],
   },

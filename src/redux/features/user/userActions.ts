@@ -32,8 +32,6 @@ interface CurrentUserResponse {
   };
 }
 
-const token = localStorage.getItem("token");
-
 export const userLogin = createAsyncThunk(
   "user/login",
   async (credentials: ICredential) => {
@@ -50,6 +48,7 @@ export const userLogin = createAsyncThunk(
 
       const { user, accessToken } = LoginResponse.data;
 
+      localStorage.removeItem("token");
       localStorage.setItem("token", accessToken);
 
       return { user, accessToken };
@@ -75,6 +74,7 @@ export const userRegister = createAsyncThunk(
 
       const { user, accessToken } = registerResponse.data;
 
+      localStorage.removeItem("token");
       localStorage.setItem("token", accessToken);
 
       return { user, accessToken };
@@ -85,6 +85,8 @@ export const userRegister = createAsyncThunk(
 );
 
 export const currentUser = createAsyncThunk("user/current-user", async () => {
+  const token = localStorage.getItem("token");
+
   try {
     const res = await fetch("http://localhost:5000/api/v1/auth/current-user", {
       method: "GET",

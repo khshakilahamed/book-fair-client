@@ -8,16 +8,19 @@ import Spinner from "../Spinner/Spinner";
 const MyBooks = () => {
   const { data, isLoading } = useGetMyBooksQuery(null);
 
-  const books: IBook[] = data?.data;
+  const books: IBook[] | undefined = data?.data;
 
   return (
     <div className="max-w-[1280px] min-h-[53vh] mx-auto">
       <h2 className="text-2xl font-semibold pt-5">
-        My Books <span className="text-sm">[{books?.length}]</span>
+        My Books{" "}
+        <span className="text-sm">
+          [{books !== undefined ? books?.length : 0}]
+        </span>
       </h2>
       <div className="my-10 ">
         {!isLoading ? (
-          books.length > 0 ? (
+          books !== undefined && books.length > 0 ? (
             <div className="flex flex-wrap justify-center gap-5">
               {books?.map((book: IBook) => (
                 <Book key={book._id} book={book} />

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from "react";
 import InputType from "../InputType/InputType";
 import bookIcon from "./../../assets/images/book-icon.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hook";
 import { userLogin, userRegister } from "../../redux/features/user/userActions";
 
@@ -15,21 +17,22 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const from: string = location.state?.from?.pathname || "/";
 
   const dispatch = useAppDispatch();
 
-  const handleLogin = (e: { preventDefault: () => void }) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const credentials = { email, password };
     void dispatch(userLogin(credentials));
-    navigate("/");
+    navigate(from, { replace: true });
   };
 
-  const handleRegister = (e: { preventDefault: () => void }) => {
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password, name);
     const credentials = { name, email, password };
     void dispatch(userRegister(credentials));
     navigate("/");

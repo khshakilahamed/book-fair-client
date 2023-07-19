@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import {
   useDeleteBookMutation,
   usePostReadingListMutation,
@@ -133,12 +134,20 @@ const Book = ({ book }: IProps) => {
             {price}
           </h4>
           {location.pathname === "/my-books" && user?.name && user?.email && (
-            <button
-              className="btn btn-error btn-outline"
-              onClick={() => handleDelete(_id)}
-            >
-              <RiDeleteBin6Line className="text-2xl" />
-            </button>
+            <div className="flex gap-2">
+              <Link
+                to={`/update-book/${_id}`}
+                className="btn btn-success btn-outline btn-sm py-1"
+              >
+                <FaRegEdit className="text-xl" />
+              </Link>
+              <button
+                className="btn btn-error btn-outline btn-sm py-1"
+                onClick={() => handleDelete(_id)}
+              >
+                <RiDeleteBin6Line className="text-xl" />
+              </button>
+            </div>
           )}
         </div>
       </div>

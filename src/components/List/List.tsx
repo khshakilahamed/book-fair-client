@@ -9,7 +9,7 @@ import {
 import swal from "sweetalert";
 
 interface IList {
-  list: IWishlist;
+  list: IWishlist | undefined;
 }
 
 const List = ({ list }: IList) => {
@@ -73,40 +73,44 @@ const List = ({ list }: IList) => {
   };
 
   return (
-    <div key={list._id} className="w-full">
-      <hr />
-      <div className="flex items-center justify-between w-full">
-        <div className="flex gap-4 py-3">
-          <img
-            onClick={() => handleNavigate(list.book._id)}
-            className="w-[100px] cursor-pointer"
-            src={list.book.image}
-            alt="book-image"
-          />
-          <div>
-            <p className="text-sm">{list.book.genre}</p>
-            <Link to={`/book-details/${list.book._id}`}>
-              <h2 className="text-xl font-semibold">{list.book.title}</h2>
-            </Link>
-            <p>
-              <span>by</span> <span>{list.book.author}</span>
-            </p>
+    <>
+      {list !== undefined && (
+        <div key={list._id} className="w-full">
+          <hr />
+          <div className="flex items-center justify-between w-full">
+            <div className="flex gap-4 py-3">
+              <img
+                onClick={() => handleNavigate(list.book._id)}
+                className="w-[100px] cursor-pointer"
+                src={list.book.image}
+                alt="book-image"
+              />
+              <div>
+                <p className="text-sm">{list.book.genre}</p>
+                <Link to={`/book-details/${list.book._id}`}>
+                  <h2 className="text-xl font-semibold">{list.book.title}</h2>
+                </Link>
+                <p>
+                  <span>by</span> <span>{list.book.author}</span>
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                className="btn btn-error btn-outline"
+                onClick={() =>
+                  pathname === "/wishlist"
+                    ? handleDeleteWishItem(list._id)
+                    : handleDeleteReadingListItem(list._id)
+                }
+              >
+                <RiDeleteBin6Line className="text-4xl" />
+              </button>
+            </div>
           </div>
         </div>
-        <div>
-          <button
-            className="btn btn-error btn-outline"
-            onClick={() =>
-              pathname === "/wishlist"
-                ? handleDeleteWishItem(list._id)
-                : handleDeleteReadingListItem(list._id)
-            }
-          >
-            <RiDeleteBin6Line className="text-4xl" />
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import {
 } from "react-icons/tb";
 import { LuInstagram } from "react-icons/lu";
 import { BsFillSendFill } from "react-icons/bs";
+import logo from "./../../assets/images/logo.png";
 
 const Footer = () => {
   return (
@@ -52,7 +53,8 @@ const Footer = () => {
               </div>
             </div>
             <div>
-              <h1 className="text-white text-2xl font-bold">News & Update</h1>
+              <img src={logo} alt="" />
+              {/* <h1 className="text-white text-2xl font-bold">News & Update</h1>
               <p className="text-gray-400 py-3">
                 We’d love it if you subscribed to our newsletter! You’ll love it
                 too.
@@ -66,7 +68,7 @@ const Footer = () => {
                 <button className="text-2xl text-gray-400">
                   <BsFillSendFill />
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { userLogout } from "../../redux/features/user/userActions";
 import userIcon from "./../../assets/images/userIcon.png";
 import { BsHeart } from "react-icons/bs";
 import { AiOutlineRead } from "react-icons/ai";
+import logo from "./../../assets/images/logo.png";
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -29,22 +30,26 @@ const Nav = () => {
       <li>
         <Link to="/books">Books</Link>
       </li>
-      <li>
-        <Link to="/addNewBook">Add Book</Link>
-      </li>
-      <li>
-        <Link to="/my-books">My Book</Link>
-      </li>
-      <li>
-        <Link to="/reading-list">
-          <AiOutlineRead className="text-2xl" />
-        </Link>
-      </li>
-      <li>
-        <Link to="/wishlist">
-          <BsHeart className="text-2xl" />
-        </Link>
-      </li>
+      {user?.email && (
+        <>
+          <li>
+            <Link to="/addNewBook">Add Book</Link>
+          </li>
+          <li>
+            <Link to="/my-books">My Book</Link>
+          </li>
+          <li>
+            <Link to="/reading-list">
+              <AiOutlineRead className="text-2xl" />
+            </Link>
+          </li>
+          <li>
+            <Link to="/wishlist">
+              <BsHeart className="text-2xl" />
+            </Link>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -82,8 +87,9 @@ const Nav = () => {
               {menuItems}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost normal-case text-xl">
-            BookFair
+          <Link to="/" className="max-h-[60px]">
+            <img className="h-full w-[100px]" src={logo} alt="" />
+            {/* BookFair */}
           </Link>
         </div>
 
