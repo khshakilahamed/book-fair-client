@@ -9,7 +9,10 @@ import BookReviews from "../BookReviews/BookReviews";
 const BookDetails = () => {
   const { id } = useParams();
 
-  const { data, isLoading, error } = useGetSingleBookQuery(id!);
+  const { data, isLoading, error } = useGetSingleBookQuery(id!, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
 
   if (isLoading) {
     return <Spinner />;
@@ -43,7 +46,7 @@ const BookDetails = () => {
 
           <hr />
           <div>
-            <BookReviews id={book._id} />
+            <BookReviews id={book._id as string} />
           </div>
         </>
       )}

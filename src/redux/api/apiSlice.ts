@@ -8,7 +8,7 @@ const token = localStorage.getItem("token")
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://book-fair-server.vercel.app/api/v1/",
+    baseUrl: "http://localhost:5000/api/v1/",
   }),
   tagTypes: [
     "books",
@@ -17,6 +17,7 @@ export const api = createApi({
     "reading-list",
     "postBook",
     "deleteBook",
+    "updateBook",
   ],
   endpoints: (builder) => ({
     getBooks: builder.query({
@@ -63,7 +64,7 @@ export const api = createApi({
           return queryString;
         }
       },
-      providesTags: ["books"],
+      providesTags: ["books", "updateBook"],
     }),
 
     postBook: builder.mutation<IBook, Partial<IBook>>({
@@ -81,6 +82,18 @@ export const api = createApi({
 
     getSingleBook: builder.query({
       query: (id: string) => `/books/${id}`,
+    }),
+    updateBook: builder.mutation({
+      query: (updatedData: IBook) => ({
+        url: `/books/${updatedData._id as string}`,
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token!,
+        },
+        body: updatedData,
+      }),
+      invalidatesTags: ["updateBook"],
     }),
     getReviews: builder.query({
       query: (id: string) => `/books/reviews/${id}`,
@@ -197,6 +210,7 @@ export const {
   useGetBooksQuery,
   usePostBookMutation,
   useGetSingleBookQuery,
+  useUpdateBookMutation,
   useGetReviewsQuery,
   usePostReviewMutation,
   useGetMyBooksQuery,

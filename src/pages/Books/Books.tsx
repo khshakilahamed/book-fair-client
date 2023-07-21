@@ -23,11 +23,17 @@ const Books = () => {
     (state) => state.book
   );
 
-  const { data: books, isLoading } = useGetBooksQuery({
-    searchTerm,
-    maxPrice,
-    minPrice,
-  });
+  const { data: books, isLoading } = useGetBooksQuery(
+    {
+      searchTerm,
+      maxPrice,
+      minPrice,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 30000,
+    }
+  );
 
   if (isLoading) {
     return <Spinner />;
@@ -35,8 +41,6 @@ const Books = () => {
 
   const handlePriceFilter = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
-    console.log(minPriceInput, maxPriceInput);
 
     dispatch(filterMinPrice(minPriceInput));
     dispatch(filterMaxPrice(maxPriceInput));

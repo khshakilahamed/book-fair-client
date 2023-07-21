@@ -1,52 +1,117 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InputType from "../../components/InputType/InputType";
-import { useGetSingleBookQuery } from "../../redux/api/apiSlice";
+import {
+  useGetSingleBookQuery,
+  useUpdateBookMutation,
+} from "../../redux/api/apiSlice";
 import Spinner from "../../components/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { format, parse } from "date-fns";
 import { IBook } from "../../types/globalType";
+import { toast } from "react-hot-toast";
 
-const today = format(new Date(), "yyyy-MM-dd"); // 2023-07-20
-
+const today = format(new Date(), "PP");
 const initialState = {
-  title: "",
-  genre: "",
-  publicationDate: today,
-  author: "",
-  price: 0,
-  image: "",
+  data: {
+    title: "",
+    genre: "",
+    publicationDate: today,
+    author: "",
+    price: 0,
+    image: "",
+  },
 };
 
 const UpdateBook = () => {
-  const [formValue, setFormValue] = useState<Partial<IBook>>(initialState);
   const { id } = useParams();
-  const { data, isLoading } = useGetSingleBookQuery(id!);
-  const { title, genre, publicationDate, author, price, image } = formValue;
+  const { data, isLoading } = useGetSingleBookQuery(id!, {
+    refetchOnMountOrArgChange: true,
+  });
+  const [updateBook, { isLoading: updatingBook }] = useUpdateBookMutation();
+  const [formValue, setFormValue] = useState<IBook>(
+    initialState.data || data?.data
+  );
 
-  console.log(data?.data);
+  const navigate = useNavigate();
+
+  type IBookGet = {
+    data: IBook;
+  };
+
+  useEffect(() => {
+    if (id && data) {
+      const book: IBookGet = data;
+
+      setFormValue(book?.data);
+    }
+  }, [data, id]);
+
+  const { title, genre, publicationDate, author, price, image } = formValue;
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  useEffect(() => {
-    if (id && Object.keys(data?.data).length > 0) {
-      const { publicationDate, ...otherInfo } = data?.data;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
 
-      const parsedDate = parse(publicationDate, "MMM d, yyyy", new Date());
-      const formattedDate = format(parsedDate, "yyyy-MM-dd");
-
-      setFormValue({ ...otherInfo, publicationDate: formattedDate });
+    if (name === "publicationDate") {
+      const publicationDate = value;
+      const parsedDate = parse(publicationDate, "yyyy-MM-dd", new Date()); // 2023-07-08 to Sat Jul 08 2023 00:00:00 GMT+0600 (Bangladesh Standard Time)
+      const formattedDate = format(parsedDate, "MMM d, yyyy"); // Sat Jul 08 2023 00:00:00 GMT+0600 (Bangladesh Standard Time) to Jul 8, 2023
+      setFormValue((prevFormData) => ({
+        ...prevFormData,
+        [name]: formattedDate,
+      }));
     } else {
-      setFormValue({ ...initialState });
+      setFormValue((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
     }
-  }, [id, data?.data]);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      if (
+        title === "" ||
+        genre === "" ||
+        publicationDate === "" ||
+        author === "" ||
+        Number(price) === 0 ||
+        image === ""
+      ) {
+        return toast.error("Please fill the all fields");
+      }
+      const { price: bookPrice } = formValue;
+
+      const book: any = await updateBook({
+        ...formValue,
+        price: Number(bookPrice),
+      });
+
+      if (book.data.success && book.data.statusCode === 200) {
+        toast.success("Successfully updated");
+
+        setTimeout(() => {
+          navigate(`/book-details/${id as string}`);
+        }, 1000);
+      } else {
+        toast.success("Something went wrong");
+      }
+    } catch (error) {
+      // Handle errors, e.g., show error message
+      console.error("Form submission error:", error);
+    }
+  };
 
   return (
     <div className="max-w-[1280px] mx-auto">
@@ -59,8 +124,7 @@ const UpdateBook = () => {
             Update book info
           </h2>
 
-          <form className="flex flex-col gap-3">
-            {/* Switch statement */}
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <InputType
                 id="title"
@@ -71,7 +135,8 @@ const UpdateBook = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 value={title || ""}
-                // onChange={}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -84,7 +149,8 @@ const UpdateBook = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 value={genre || ""}
-                // onChange={}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -95,9 +161,19 @@ const UpdateBook = () => {
                 name="publicationDate"
                 placeholder="Publication Date"
                 type="date"
-                value={publicationDate || today}
+                value={
+                  format(
+                    parse(publicationDate, "MMM d, yyyy", new Date()),
+                    "yyyy-MM-dd"
+                  ) ||
+                  format(
+                    parse(publicationDate, "MMM d, yyyy", new Date()),
+                    "yyyy-MM-dd"
+                  )
+                }
                 className="outline-none border rounded-lg px-2 py-1"
-                // onChange={(e) => console.log(e.target.value)}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -110,6 +186,7 @@ const UpdateBook = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 value={author || ""}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
@@ -121,7 +198,9 @@ const UpdateBook = () => {
                 placeholder="Price"
                 type="number"
                 className="outline-none border rounded-lg px-2 py-1"
-                value={price || 0}
+                value={price || ""}
+                onChange={handleChange}
+                // required
               />
             </div>
             <div className="flex flex-col">
@@ -134,15 +213,21 @@ const UpdateBook = () => {
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
                 value={image || ""}
+                onChange={handleChange}
+                required
               />
             </div>
             <div className="w-full text-center">
-              {/* {isLoading ? (
-            <span className="loading loading-spinner loading-xs"></span>
-          ) : (
-            <button className="btn btn-error mt-5 w-full">Submit</button>
-          )} */}
-              <button className="btn btn-error mt-5 w-full">Submit</button>
+              <button
+                className="btn btn-error mt-5 w-full"
+                disabled={updatingBook}
+              >
+                {updatingBook ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  "Submit"
+                )}
+              </button>
             </div>
           </form>
         </div>

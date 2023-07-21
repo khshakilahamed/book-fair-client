@@ -8,8 +8,8 @@ export interface IReviews {
   };
 }
 
-export interface IBook {
-  _id: string;
+export type IBook = {
+  _id?: string;
   title: string;
   genre: string;
   publicationDate: string;
@@ -17,7 +17,7 @@ export interface IBook {
   price: number;
   image: string;
   reviews?: { userId: string; review: string }[];
-}
+};
 
 export interface IPostReview {
   id: string;
@@ -25,6 +25,10 @@ export interface IPostReview {
     review: string;
   };
 }
+
+export type IResponse = {
+  data: any;
+};
 
 export interface IResponseQuery {
   statusCode: number;

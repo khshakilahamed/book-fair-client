@@ -36,16 +36,13 @@ export const userLogin = createAsyncThunk(
   "user/login",
   async (credentials: ICredential) => {
     try {
-      const res = await fetch(
-        "https://book-fair-server.vercel.app/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const res = await fetch("http://localhost:5000/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
       const LoginResponse: LoginRegisterResponse = await res.json();
 
@@ -65,16 +62,13 @@ export const userRegister = createAsyncThunk(
   "user/register",
   async (credentials: ICredential) => {
     try {
-      const res = await fetch(
-        "https://book-fair-server.vercel.app/api/v1/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const res = await fetch("http://localhost:5000/api/v1/auth/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
       const registerResponse: LoginRegisterResponse = await res.json();
 
@@ -94,16 +88,13 @@ export const currentUser = createAsyncThunk("user/current-user", async () => {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch(
-      "https://book-fair-server.vercel.app/api/v1/auth/current-user",
-      {
-        method: "GET",
-        headers: {
-          authorization: token!,
-        },
-        //   credentials: "same-origin",
-      }
-    );
+    const res = await fetch("http://localhost:5000/api/v1/auth/current-user", {
+      method: "GET",
+      headers: {
+        authorization: token!,
+      },
+      //   credentials: "same-origin",
+    });
 
     const responseData: CurrentUserResponse = await res.json();
 
@@ -117,9 +108,7 @@ export const currentUser = createAsyncThunk("user/current-user", async () => {
 
 export const userLogout = createAsyncThunk("user/logout", async () => {
   try {
-    const res = await fetch(
-      "https://book-fair-server.vercel.app/api/v1/auth/logout"
-    );
+    const res = await fetch("http://localhost:5000/api/v1/auth/logout");
 
     const responseData: CurrentUserResponse = await res.json();
 

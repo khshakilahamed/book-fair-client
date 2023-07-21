@@ -6,7 +6,9 @@ import Book from "../Book/Book";
 import Spinner from "../Spinner/Spinner";
 
 const MyBooks = () => {
-  const { data, isLoading } = useGetMyBooksQuery(null);
+  const { data, isLoading } = useGetMyBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const books: IBook[] | undefined = data?.data;
 
