@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from "react";
@@ -6,6 +7,8 @@ import bookIcon from "./../../assets/images/book-icon.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hook";
 import { userLogin, userRegister } from "../../redux/features/user/userActions";
+import { toast } from "react-hot-toast";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 interface IFormType {
   formType: string;
@@ -24,18 +27,54 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
 
   const dispatch = useAppDispatch();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const credentials = { email, password };
-    void dispatch(userLogin(credentials));
-    navigate(from, { replace: true });
+    try {
+      const credentials = { email, password };
+      const login: PayloadAction<any> = await dispatch(userLogin(credentials));
+      if (
+        login.payload &&
+        login.payload.user &&
+        login.payload.user.email &&
+        login.payload.user.name
+      ) {
+        toast.success("Successfully Logged in");
+
+        navigate(from, { replace: true });
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const credentials = { name, email, password };
-    void dispatch(userRegister(credentials));
-    navigate("/");
+    try {
+      const credentials = { name, email, password };
+      const register: PayloadAction<any> = await dispatch(
+        userRegister(credentials)
+      );
+      if (
+        register.payload &&
+        register.payload.user &&
+        register.payload.user.email &&
+        register.payload.user.name
+      ) {
+        toast.success("Successfully registered");
+
+        navigate("/");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,12 +86,7 @@ const LoginRegisterForm = ({ formType, submitBtn, formTitle }: IFormType) => {
         <h2 className="text-2xl font-bold text-center my-5">{formTitle}</h2>
         <form
           className="flex flex-col gap-3"
-          onSubmit={(e) => {
-            if (formType === "login") return handleLogin(e);
-            else {
-              return handleRegister(e);
-            }
-          }}
+          onSubmit={formType === "login" ? handleLogin : handleRegister}
         >
           {/* Switch statement */}
           {(() => {

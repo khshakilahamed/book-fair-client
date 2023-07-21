@@ -6,7 +6,7 @@ import { BsCurrencyDollar, BsHeart } from "react-icons/bs";
 import { AiOutlineRead } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import "./Book.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -26,6 +26,7 @@ interface IProps {
 
 const Book = ({ book }: IProps) => {
   const { _id, title, genre, author, price, image } = book;
+  const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.user);
   const [deleteBook, { isSuccess }] = useDeleteBookMutation();
@@ -83,11 +84,19 @@ const Book = ({ book }: IProps) => {
   };
 
   const handleWishlist = (id: string) => {
-    postWishlist(id);
+    if (user && user.email && user.name) {
+      postWishlist(id);
+    } else {
+      navigate("/auth/login");
+    }
   };
 
   const handleReadingList = (id: string) => {
-    postReadingList(id);
+    if (user && user.email && user.name) {
+      postReadingList(id);
+    } else {
+      navigate("/auth/login");
+    }
   };
 
   return (
@@ -99,21 +108,21 @@ const Book = ({ book }: IProps) => {
             <p
               className="wishlist"
               title="Wishlist"
-              onClick={() => handleWishlist(book._id)}
+              onClick={() => handleWishlist(book._id as string)}
             >
               <BsHeart className="action-icon bg-white h-[50px]  w-[50px] p-2 rounded text-3xl cursor-pointer " />
             </p>
             <p
               className="addToReading"
               title="Add to reading"
-              onClick={() => handleReadingList(book._id)}
+              onClick={() => handleReadingList(book._id as string)}
             >
               <AiOutlineRead className="action-icon bg-white h-[50px]  w-[50px] p-2 rounded text-4xl cursor-pointer" />
             </p>
           </div>
           <div>
             <Link
-              to={`/book-details/${_id}`}
+              to={`/book-details/${_id as string}`}
               className="btn btn-link text-white text-lg hover:text-black"
             >
               Details
@@ -136,14 +145,14 @@ const Book = ({ book }: IProps) => {
           {location.pathname === "/my-books" && user?.name && user?.email && (
             <div className="flex gap-2">
               <Link
-                to={`/update-book/${_id}`}
+                to={`/update-book/${_id as string}`}
                 className="btn btn-success btn-outline btn-sm py-1"
               >
                 <FaRegEdit className="text-xl" />
               </Link>
               <button
                 className="btn btn-error btn-outline btn-sm py-1"
-                onClick={() => handleDelete(_id)}
+                onClick={() => handleDelete(_id as string)}
               >
                 <RiDeleteBin6Line className="text-xl" />
               </button>
