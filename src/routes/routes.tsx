@@ -11,6 +11,7 @@ import WishList from "../components/WishList/WishList";
 import ReadingList from "../components/ReadingList/ReadingList";
 import PrivateRoute from "./PrivateRoute";
 import UpdateBook from "../pages/Books/UpdateBook";
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
 
 const routes = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const routes = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);
 

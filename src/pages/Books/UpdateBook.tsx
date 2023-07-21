@@ -101,6 +101,7 @@ const UpdateBook = () => {
       if (book.data.success && book.data.statusCode === 200) {
         toast.success("Successfully updated");
 
+        // navigate to book details page
         setTimeout(() => {
           navigate(`/book-details/${id as string}`);
         }, 1000);
