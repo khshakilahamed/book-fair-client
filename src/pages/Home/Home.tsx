@@ -1,3 +1,4 @@
+import Authors from "../../components/Authors/Authors";
 import Banner from "../../components/Banner/Banner";
 import Categories from "../../components/Categories/Categories";
 import Exclusive from "../../components/Exclusive/Exclusive";
@@ -10,6 +11,7 @@ const Home = () => {
       <Exclusive />
       <NewBooks />
       <Categories />
+      <Authors />
     </div>
   );
 };

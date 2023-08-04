@@ -1,8 +1,8 @@
-import biography from "./../../assets/images/biography.jpg";
-import cooking from "./../../assets/images/cooking.jpg";
-import soul from "./../../assets/images/soul.jpg";
-import music from "./../../assets/images/music.webp";
-import fantasy from "./../../assets/images/fantasy.jpg";
+import biography from "./../../assets/images/categories/biography.jpg";
+import cooking from "./../../assets/images/categories/cooking.jpg";
+import soul from "./../../assets/images/categories/soul.jpg";
+import music from "./../../assets/images/categories/music.webp";
+import fantasy from "./../../assets/images/categories/fantasy.jpg";
 import "./Categories.css";
 import { HiOutlineMinus } from "react-icons/hi";
 
@@ -10,7 +10,7 @@ const Categories = () => {
   return (
     <div className="max-w-[1280px] mx-auto px-10 py-10">
       <div className="flex flex-col items-center gap-2">
-        <span className="bg-gray-100 p-2 px-3 rounded uppercase">
+        <span className="bg-gray-100 p-2 px-3 rounded uppercase font-bold">
           COLLECTIONS
         </span>
         <h2 className=" text-center font-bold text-4xl md:text-5xl">
