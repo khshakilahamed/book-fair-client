@@ -3,7 +3,6 @@ import author2 from "./../../assets/images/authors/author2.jpg";
 import author3 from "./../../assets/images/authors/author3.jpg";
 import author4 from "./../../assets/images/authors/author4.jpg";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import { FiFacebook, FiTwitter, FiInstagram, FiYoutube } from "react-icons/fi";
 
 const Authors = () => {
@@ -71,7 +70,7 @@ const Authors = () => {
 
   return (
     <div className="bg-gray-100 py-20">
-      <div className="max-w-[1280px] mx-auto px-10">
+      <div className="max-w-[1280px] mx-auto px-10 xl:px-0">
         <div className="flex flex-col items-center gap-2">
           <span className="bg-white p-2 px-3 rounded uppercase font-bold">
             This Month's

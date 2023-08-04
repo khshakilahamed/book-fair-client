@@ -49,7 +49,7 @@ const Books = () => {
   return (
     <div className="max-w-[1280px] min-h-[53vh] mx-auto gap-10">
       <div className="flex flex-col lg:flex-row lg:gap-10">
-        <div className=" lg:w-[200px] flex justify-center px-10 lg:px-0">
+        <div className="lg:w-[200px] flex justify-center px-10 lg:px-0">
           <form
             className="my-10 lg:w-full flex lg:flex-col items-center h-[50px] lg:pl-5"
             onSubmit={handlePriceFilter}
@@ -87,7 +87,7 @@ const Books = () => {
             </div>
           </form>
         </div>
-        <div className="lg:my-10 flex flex-wrap justify-center gap-5">
+        <div className="flex flex-wrap justify-center gap-5 px-10 lg:px-0 lg:my-10 ">
           {books?.data.map((book: IBook) => (
             <Book key={book._id} book={book} />
           ))}

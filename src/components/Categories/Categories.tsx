@@ -8,7 +8,7 @@ import { HiOutlineMinus } from "react-icons/hi";
 
 const Categories = () => {
   return (
-    <div className="max-w-[1280px] mx-auto px-10 py-10">
+    <div className="max-w-[1280px] mx-auto px-10 xl:px-0 py-10">
       <div className="flex flex-col items-center gap-2">
         <span className="bg-gray-100 p-2 px-3 rounded uppercase font-bold">
           COLLECTIONS

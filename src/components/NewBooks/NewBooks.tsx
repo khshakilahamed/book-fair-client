@@ -13,7 +13,7 @@ const NewBooks = () => {
     return <Spinner />;
   }
   return (
-    <div className="max-w-[1280px] mx-auto px-10 pt-20 pb-10">
+    <div className="max-w-[1280px] mx-auto px-10 xl:px-0 pt-20 pb-10">
       <div className="flex flex-col items-center gap-2">
         <span className="bg-gray-100 p-2 px-3 rounded uppercase font-bold">
           READ NEW
@@ -25,7 +25,7 @@ const NewBooks = () => {
       </div>
 
       <div className="mt-10 flex flex-wrap justify-center gap-5">
-        {books?.data.slice(0, 6).map((book: IBook) => (
+        {books?.data.slice(0, 8).map((book: IBook) => (
           <Book key={book._id} book={book} />
         ))}
       </div>

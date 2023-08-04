@@ -13,7 +13,7 @@ const MyBooks = () => {
   const books: IBook[] | undefined = data?.data;
 
   return (
-    <div className="max-w-[1280px] min-h-[53vh] mx-auto">
+    <div className="max-w-[1280px] min-h-[53vh] mx-auto px-10 lg:px-0">
       <h2 className="text-2xl font-semibold pt-5">
         My Books{" "}
         <span className="text-sm">
