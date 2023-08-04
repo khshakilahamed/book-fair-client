@@ -75,11 +75,11 @@ const BookReviews = ({ id }: { id: string }) => {
         ) : reviews.length > 0 ? (
           reviews?.map((review: IReviews) => (
             <div key={review._id} className="my-3">
-              <p>
+              <div>
+                <h2 className="font-semibold text-xl">{review.review}</h2>
                 <span className="text-gray-600"> by</span>{" "}
                 <span className=" text-lg">{review.user.name}</span>
-                <h2 className="font-semibold text-xl">{review.review}</h2>
-              </p>
+              </div>
             </div>
           ))
         ) : (

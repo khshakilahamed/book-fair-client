@@ -5,12 +5,12 @@ import { IBook } from "../../types/globalType";
 import { BsCurrencyDollar, BsHeart } from "react-icons/bs";
 import { AiOutlineRead } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import "./Book.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hook";
 
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
 import {
   useDeleteBookMutation,
   usePostReadingListMutation,
@@ -25,7 +25,7 @@ interface IProps {
 }
 
 const Book = ({ book }: IProps) => {
-  const { _id, title, genre, author, price, image } = book;
+  const { _id, title, genre, author, price, image, publicationDate } = book;
   const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.user);
@@ -100,7 +100,7 @@ const Book = ({ book }: IProps) => {
   };
 
   return (
-    <div className="card-container min-w-[250px] max-w-[300px] bg-gray-100 rounded-xl overflow-hidden">
+    <div className="card-container xs:w-[200px] sm:w-[300px] bg-gray-100 rounded-xl overflow-hidden">
       <div className=" flex justify-center items-center p-8 relative">
         <img className="rounded-r-xl w-full" src={image} alt="bookImage" />
         <div className="action-container absolute flex flex-col justify-center items-center gap-3 h-full w-full">
@@ -136,6 +136,9 @@ const Book = ({ book }: IProps) => {
         <h2 className="text-xl font-bold">{title}</h2>
         <p>
           <span className=" text-gray-600">By</span> {author}
+        </p>
+        <p>
+          <span className=" text-gray-600"></span> {publicationDate}
         </p>
         <div className="flex items-center justify-between my-5">
           <h4 className="flex items-center text-2xl text-error font-bold">

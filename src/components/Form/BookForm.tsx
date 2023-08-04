@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { FormEvent, useState } from "react";
 import InputType from "../InputType/InputType";
 import { format } from "date-fns";
@@ -21,10 +22,6 @@ const BookForm = () => {
   const [postBook, { isLoading, isError, isSuccess, error }] =
     usePostBookMutation();
 
-  // if (isLoading && isSuccess) {
-  //   return <Spinner />;
-  // }
-
   if (isSuccess && !isLoading) {
     toast.success("Successfully added the book");
   }
@@ -33,7 +30,9 @@ const BookForm = () => {
     toast.error("Something went wrong");
   }
 
-  const handleAddBook = (e: FormEvent<HTMLFormElement>) => {
+  const handleAddBook = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
     // console.log(title, genre, date, author, price, imageLink);
@@ -58,7 +57,7 @@ const BookForm = () => {
       image: imageLink,
     };
 
-    void postBook(bookData);
+    await postBook(bookData);
     e.currentTarget.reset();
   };
 

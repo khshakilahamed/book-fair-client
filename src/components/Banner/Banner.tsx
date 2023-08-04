@@ -12,10 +12,10 @@ const Banner = () => {
         <div className="flex flex-col-reverse md:flex-row w-full h-full max-w-[1280px]  px-4 py-10 mx-auto">
           <div className="banner-main-left md:w-[40%] flex justify-center items-center h-full py-10">
             <div className="flex flex-col text-center md:text-start gap-3">
-              <h2 className="text-5xl font-bold">
+              <h2 className="font-bold text-4xl md:text-5xl">
                 Read <span className="text-error">PDF Books</span> Online
               </h2>
-              <p className="text-2xl text-gray-600">
+              <p className="text-xl md:text-2xl text-gray-600">
                 Let customers read books online without leaving website
               </p>
               <div>
