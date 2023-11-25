@@ -1,14 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IBook, IPostReview } from "../../types/globalType";
+import { getBaseURL } from "../../helpers/baseURL";
 
 const token = localStorage.getItem("token")
   ? localStorage.getItem("token")
   : null;
 
+const baseURL = getBaseURL();
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://book-fair-server.vercel.app/api/v1/",
+    baseUrl: baseURL,
   }),
   tagTypes: [
     "books",

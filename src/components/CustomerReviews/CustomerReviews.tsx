@@ -3,7 +3,7 @@ import author2 from "./../../assets/images/authors/author2.jpg";
 import author3 from "./../../assets/images/authors/author3.jpg";
 import author4 from "./../../assets/images/authors/author4.jpg";
 import Carousel from "react-multi-carousel";
-import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
+// import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
 
 const CustomerReviews = () => {
   const authorsDetails = [
