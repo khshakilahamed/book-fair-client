@@ -1,6 +1,6 @@
 interface InputTypeProps {
   type: string;
-  label: string;
+  label?: string | React.ReactNode | React.ReactElement;
   name: string;
   id?: string;
   placeholder?: string;
@@ -19,9 +19,11 @@ const InputType = ({
 }: InputTypeProps & React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <>
-      <label htmlFor={id} className={labelClassName}>
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
       <input
         type={type}
         name={name}

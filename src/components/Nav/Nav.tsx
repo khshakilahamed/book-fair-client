@@ -106,7 +106,7 @@ const Nav = () => {
                 type="text"
                 name="search"
                 labelClassName="hidden"
-                className="border py-1 px-2 rounded border-gray-800 w-[120px] sm:w-[200px] md:w-auto"
+                className="border py-1 px-2 rounded border-gray-800 w-[150px] sm:w-[200px] md:w-auto"
                 onChange={handleSearch}
               />
             </div>

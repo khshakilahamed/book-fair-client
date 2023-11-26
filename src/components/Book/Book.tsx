@@ -19,13 +19,15 @@ import {
 import swal from "sweetalert";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
+import { CiCalendar } from "react-icons/ci";
+import { LuUser } from "react-icons/lu";
 
 interface IProps {
   book: IBook;
 }
 
 const Book = ({ book }: IProps) => {
-  const { _id, title, genre, author, price, image, publicationDate } = book;
+  const { _id, title, genre, author, image, publicationDate } = book;
   const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.user);
@@ -102,7 +104,11 @@ const Book = ({ book }: IProps) => {
   return (
     <div className="card-container xs:w-[200px] sm:w-[300px] bg-gray-100 rounded-xl overflow-hidden">
       <div className=" flex justify-center items-center p-8 relative">
-        <img className="rounded-r-xl w-full" src={image} alt="bookImage" />
+        <img
+          className="rounded-r-xl w-full h-[300px]"
+          src={image}
+          alt="bookImage"
+        />
         <div className="action-container absolute flex flex-col justify-center items-center gap-3 h-full w-full">
           <div className="flex items-center gap-3">
             <p
@@ -133,18 +139,24 @@ const Book = ({ book }: IProps) => {
       </div>
       <div className="px-8">
         <p className="text-sm text-gray-600">{genre}</p>
-        <h2 className="text-xl font-bold">{title}</h2>
-        <p>
-          <span className=" text-gray-600">By</span> {author}
+        <Link to={`/book-details/${_id as string}`}>
+          <h2 className="text-xl font-bold">
+            {title.length > 21 ? title.slice(0, 21) + "..." : title}
+          </h2>
+        </Link>
+        <p className="flex items-center gap-2">
+          _By
+          <span className=" text-gray-600">{author}</span>
         </p>
-        <p>
-          <span className=" text-gray-600"></span> {publicationDate}
+        <p className="flex items-center gap-2">
+          <CiCalendar />
+          <span className=" text-gray-600">{publicationDate}</span>
         </p>
         <div className="flex items-center justify-between my-5">
-          <h4 className="flex items-center text-2xl text-error font-bold">
+          {/* <h4 className="flex items-center text-2xl text-error font-bold">
             <BsCurrencyDollar />
             {price}
-          </h4>
+          </h4> */}
           {location.pathname === "/my-books" && user?.name && user?.email && (
             <div className="flex gap-2">
               <Link

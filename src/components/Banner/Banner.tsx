@@ -4,6 +4,7 @@ import { HiOutlineBookOpen } from "react-icons/hi";
 import { SiTheconversation } from "react-icons/si";
 import { SlReload } from "react-icons/sl";
 import { RiSecurePaymentLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -19,7 +20,9 @@ const Banner = () => {
                 Let customers read books online without leaving website
               </p>
               <div>
-                <button className="btn btn-error text-white">Explore</button>
+                <Link to="/books">
+                  <button className="btn btn-error text-white">Explore</button>
+                </Link>
               </div>
             </div>
           </div>

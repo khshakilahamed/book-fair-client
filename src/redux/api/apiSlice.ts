@@ -24,49 +24,11 @@ export const api = createApi({
   ],
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: ({
-        searchTerm,
-        minPrice,
-        maxPrice,
-      }: {
-        searchTerm?: string;
-        minPrice?: number;
-        maxPrice?: number;
-      }) => {
-        if (searchTerm !== undefined) {
-          // Handle when searchTerm is defined
-          let queryString = `/books/?searchTerm=${encodeURIComponent(
-            searchTerm
-          )}`;
-
-          if (minPrice !== undefined) {
-            queryString += `&minPrice=${minPrice}`;
-          }
-
-          if (maxPrice !== undefined) {
-            queryString += `&maxPrice=${maxPrice}`;
-          }
-
-          return queryString;
-        } else {
-          // Handle when searchTerm is undefined
-          let queryString = "/books/";
-
-          if (minPrice !== undefined) {
-            queryString += `?minPrice=${minPrice}`;
-          }
-
-          if (maxPrice !== undefined) {
-            if (minPrice !== undefined) {
-              queryString += `&maxPrice=${maxPrice}`;
-            } else {
-              queryString += `?maxPrice=${maxPrice}`;
-            }
-          }
-
-          return queryString;
-        }
-      },
+      query: (arg: Record<string, any>) => ({
+        url: "/books",
+        method: "GET",
+        params: arg,
+      }),
       providesTags: ["books", "updateBook"],
     }),
 
@@ -225,3 +187,47 @@ export const {
   usePostReadingListMutation,
   useDeleteReadingListMutation,
 } = api;
+
+// query: ({
+//   searchTerm,
+//   minPrice,
+//   maxPrice,
+// }: {
+//   searchTerm?: string;
+//   minPrice?: number;
+//   maxPrice?: number;
+// }) => {
+//   if (searchTerm !== undefined) {
+//     // Handle when searchTerm is defined
+//     let queryString = `/books/?searchTerm=${encodeURIComponent(
+//       searchTerm
+//     )}`;
+
+//     if (minPrice !== undefined) {
+//       queryString += `&minPrice=${minPrice}`;
+//     }
+
+//     if (maxPrice !== undefined) {
+//       queryString += `&maxPrice=${maxPrice}`;
+//     }
+
+//     return queryString;
+//   } else {
+//     // Handle when searchTerm is undefined
+//     let queryString = "/books/";
+
+//     if (minPrice !== undefined) {
+//       queryString += `?minPrice=${minPrice}`;
+//     }
+
+//     if (maxPrice !== undefined) {
+//       if (minPrice !== undefined) {
+//         queryString += `&maxPrice=${maxPrice}`;
+//       } else {
+//         queryString += `?maxPrice=${maxPrice}`;
+//       }
+//     }
+
+//     return queryString;
+//   }
+// },

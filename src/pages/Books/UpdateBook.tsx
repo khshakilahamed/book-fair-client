@@ -23,7 +23,7 @@ const initialState = {
     genre: "",
     publicationDate: today,
     author: "",
-    price: 0,
+    bookPDF: "",
     image: "",
   },
 };
@@ -52,7 +52,7 @@ const UpdateBook = () => {
     }
   }, [data, id]);
 
-  const { title, genre, publicationDate, author, price, image } = formValue;
+  const { title, genre, publicationDate, author, image, bookPDF } = formValue;
 
   if (isLoading) {
     return <Spinner />;
@@ -86,16 +86,13 @@ const UpdateBook = () => {
         genre === "" ||
         publicationDate === "" ||
         author === "" ||
-        Number(price) === 0 ||
         image === ""
       ) {
         return toast.error("Please fill the all fields");
       }
-      const { price: bookPrice } = formValue;
 
       const book: any = await updateBook({
         ...formValue,
-        price: Number(bookPrice),
       });
 
       if (book.data.success && book.data.statusCode === 200) {
@@ -192,28 +189,14 @@ const UpdateBook = () => {
             </div>
             <div className="flex flex-col">
               <InputType
-                id="price"
-                label="Price"
+                id="bookPDF"
+                label="Book PDF"
                 labelClassName="text-lg font-semibold"
-                name="price"
-                placeholder="Price"
-                type="number"
-                className="outline-none border rounded-lg px-2 py-1"
-                value={price || ""}
-                onChange={handleChange}
-                // required
-              />
-            </div>
-            <div className="flex flex-col">
-              <InputType
-                id="image"
-                label="Image Link"
-                labelClassName="text-lg font-semibold"
-                name="image"
-                placeholder="Image Link"
+                name="bookPDF"
+                placeholder="book PDF"
                 type="text"
                 className="outline-none border rounded-lg px-2 py-1"
-                value={image || ""}
+                value={bookPDF || ""}
                 onChange={handleChange}
                 required
               />
